@@ -1,5 +1,5 @@
 window.onload = function () {
-  getWindowWidth();
+  // getWindowWidth();
   // Attach the resize event listener
   // Register an event listener for screen width changes
   window.addEventListener("resize", handleScreenWidthChange);

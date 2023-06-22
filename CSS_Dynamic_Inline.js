@@ -62,45 +62,43 @@ function compileCSSData() {
   return cssData;
 }
 
+// Function to apply CSS attributes and values to the element
+function applyCSSStyles(element, styles, breakpoint) {
+  // Reset the inline styles of the element
+  element.style.cssText = "";
+
+  // Apply the matching CSS attributes and values to the element
+  for (const { breakpoint: bp, attribute, value } of styles) {
+    // Check if the breakpoint matches the current breakpoint or is a '$'
+    if (bp === breakpoint || bp === "$") {
+      if (bp === breakpoint) {
+        element.style[attribute] = value;
+      } else {
+        element.style[attribute] = "";
+      }
+    }
+  }
+}
+
+// Function to apply classes to the element
+function applyClasses(element, classes, breakpoint) {
+  // Iterate over the classes and apply them based on the breakpoint
+  for (const { breakpoint: bp, classString } of classes) {
+    if (bp === breakpoint) {
+      element.classList.add(classString);
+    } else {
+      element.classList.remove(classString);
+    }
+  }
+}
+
 // Function to handle screen width changes and apply corresponding CSS data
 function handleScreenWidthChange() {
   const screenWidth = window.innerWidth;
   const cssData = compileCSSData();
   const currentBreakpoint = determineBreakpoint(screenWidth);
-
   for (const { element, styles, classes } of cssData) {
-    element.style.cssText = "";
-
-    // Track whether the current breakpoint matches the element's breakpoint
-    let breakpointMatch = false;
-
-    // Apply the matching CSS attributes and values to the element
-    for (const { breakpoint, attribute, value } of styles) {
-      if (breakpoint === currentBreakpoint || breakpoint === "$") {
-        if (breakpoint === currentBreakpoint) {
-          element.style[attribute] = value;
-          breakpointMatch = true;
-        } else {
-          element.style[attribute] = "";
-        }
-      }
-    }
-
-    // Apply the matching classes to the element
-    for (const { breakpoint, classString } of classes) {
-      if (breakpoint === currentBreakpoint || breakpoint === "$") {
-        if (breakpoint === currentBreakpoint) {
-          element.classList.add(classString);
-          breakpointMatch = true;
-        } else {
-          element.classList.remove(classString);
-        }
-      }
-    }
-
-    // If no breakpoint match, remove all classes
-    if (!breakpointMatch) {
-      element.className = "";
-    }
+    applyCSSStyles(element, styles, currentBreakpoint);
+    applyClasses(element, classes, currentBreakpoint);
   }
 }

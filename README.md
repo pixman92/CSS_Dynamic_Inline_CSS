@@ -6,4 +6,12 @@ https://cdn.jsdelivr.net/gh/pixman92/CSS_Dynamic_Inline_CSS@0.6/CSS_Dynamic_Inli
 
 To make the CSS Dynamic Attributes, use the '$' in the Class String
 
+To make dynamic CSS Screen Width elements, use this function:
+```
+applyDynamicAttributes(dynamicAttributes, elementId, innerHTML);
+```
+
+where dynamicAttibutes is an array (['sm:color[blue]', 'sm:font-size[30px]', 'md:font-size[40px]']);
+elementId - the id of the Element you wish to append the created node
+innerHTML - is the HTML you want to add to the new HTML
 

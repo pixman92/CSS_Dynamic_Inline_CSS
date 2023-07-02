@@ -1,10 +1,30 @@
 window.onload = function () {
   // Attach the resize event listener
-  window.addEventListener("resize", handleScreenWidthChange);
+  window.addEventListener("resize", ()=>{
+    handleScreenWidthChange()
+
+    if(printIfTrue){
+      console.log(determineBreakpoint(window.innerWidth));
+      // debugger;
+    }
+  });
 
   // Initial execution to apply the CSS for the current screen width
   handleScreenWidthChange();
+
+
 };
+
+let printIfTrue = false;
+
+function changePrintFunction(trueOrFalse){
+  if(trueOrFalse){
+    printIfTrue=true;
+  }else{
+    printIfTrue=false;
+  }
+}
+
 
 // Function to determine the breakpoint based on screen width
 function determineBreakpoint(screenWidth) {

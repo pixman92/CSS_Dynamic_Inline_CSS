@@ -15,3 +15,10 @@ where dynamicAttibutes is an array (['sm:color[blue]', 'sm:font-size[30px]', 'md
 elementId - the id of the Element you wish to append the created node
 innerHTML - is the HTML you want to add to the new HTML
 
+========================================
+To turn on the Screen Size - console.log print:
+```
+changePrintFunction(true/false)
+```
+
+

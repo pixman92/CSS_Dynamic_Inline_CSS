@@ -136,38 +136,41 @@ function handleScreenWidthChange() {
 }
 
 // ========================================
-// // Function to create a new HTML element with dynamic
-function applyDynamicAttributes(dynamicAttributes, elementId, innerHTML) {
-  // Function to apply dynamic attributes to the element
-  function applyAttributes(attributes) {
-    attributes.forEach(attribute => {
-      const [screenSize, attributeValue] = attribute.split(":");
-      const [attributeName, attributeData] = attributeValue.split("[");
-      const attributeValueWithoutBracket = attributeData.slice(0, -1);
+
+
+
+// Function to create a new HTML element with dynamic
+// function applyDynamicAttributes(stringOfHTMLToBeParseds) {
+//   // Function to apply dynamic attributes to the element
+//   function applyAttributes(attributes) {
+//     attributes.forEach(attribute => {
+//       const [screenSize, attributeValue] = attribute.split(":");
+//       const [attributeName, attributeData] = attributeValue.split("[");
+//       const attributeValueWithoutBracket = attributeData.slice(0, -1);
       
-      if (screenSize === 'sm' && window.innerWidth < 576) {
-        document.getElementById(elementId).style[attributeName] = attributeValueWithoutBracket;
-      } else if (screenSize === 'md' && window.innerWidth >= 576 && window.innerWidth < 768) {
-        document.getElementById(elementId).style[attributeName] = attributeValueWithoutBracket;
-      } else if (screenSize === 'lg' && window.innerWidth >= 768 && window.innerWidth < 992) {
-        document.getElementById(elementId).style[attributeName] = attributeValueWithoutBracket;
-      } else if (screenSize === 'xl' && window.innerWidth >= 992) {
-        document.getElementById(elementId).style[attributeName] = attributeValueWithoutBracket;
-      }
-    });
-  }
+//       if (screenSize === 'sm' && window.innerWidth < 576) {
+//         document.getElementById(elementId).style[attributeName] = attributeValueWithoutBracket;
+//       } else if (screenSize === 'md' && window.innerWidth >= 576 && window.innerWidth < 768) {
+//         document.getElementById(elementId).style[attributeName] = attributeValueWithoutBracket;
+//       } else if (screenSize === 'lg' && window.innerWidth >= 768 && window.innerWidth < 992) {
+//         document.getElementById(elementId).style[attributeName] = attributeValueWithoutBracket;
+//       } else if (screenSize === 'xl' && window.innerWidth >= 992) {
+//         document.getElementById(elementId).style[attributeName] = attributeValueWithoutBracket;
+//       }
+//     });
+//   }
   
-  // Apply initial dynamic attributes
-  applyAttributes(dynamicAttributes);
+//   // Apply initial dynamic attributes
+//   applyAttributes(dynamicAttributes);
   
-  // Add resize event listener to update dynamic attributes on screen width change
-  window.addEventListener('resize', function() {
-    applyAttributes(dynamicAttributes);
-  });
+//   // Add resize event listener to update dynamic attributes on screen width change
+//   window.addEventListener('resize', function() {
+//     applyAttributes(dynamicAttributes);
+//   });
   
-  // Set innerHTML of the element
-  document.getElementById(elementId).innerHTML = innerHTML;
-}
+//   // Set innerHTML of the element
+//   document.getElementById(elementId).innerHTML = innerHTML;
+// }
 
 // // Example usage
 // const dynamicAttributes = ['sm:margin[40px]', 'sm:font-size[40px]', 'sm:color[blue]', 'md:color[red]', 'md:margin[20px]', 'lg:margin[10px]', 'xl:margin[5px]'];

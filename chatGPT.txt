@@ -1,0 +1,25 @@
+javascript - use lots of comments
+
+make a function that takes in CSS text and an HTML element's ID.
+based on the media breakpoints 'sm/md/lg/xl', take the CSS text ('sm/md/lg/xl',) that follows the current media breakpoint. and add it to a string (saved String), when you have iterated through all CSS text, add 'saved string' to the HTML element's attribute's style string
+
+example:
+sm:color[red] - this makes the HTML element's color to red, when the screen width is small
+my element:
+style="color:red"
+
+example:
+sm:font-size[20px] sm:color[blue] md:margin-top[80px] md:font-size[25px]
+
+example: (for sm screensize)
+style="font-size:20px; color:blue;"
+
+example: (for md screensize)
+style="margin-top:80px; font-size:25px;"
+
+also, an example for when there is only a media breakpoint, a ':' and [ and ] - where the text inside the [ and ] is a predefined class
+example:
+sm:[center] - center is a predefined class
+
+
+take all the CSS text, that match the current media breakpoint, and reapply them everytime the window width resizes

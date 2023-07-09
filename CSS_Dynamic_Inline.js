@@ -137,46 +137,104 @@ function handleScreenWidthChange() {
 
 // ========================================
 
-
-
 // Function to create a new HTML element with dynamic
-// function applyDynamicAttributes(stringOfHTMLToBeParseds) {
-//   // Function to apply dynamic attributes to the element
-//   function applyAttributes(attributes) {
-//     attributes.forEach(attribute => {
-//       const [screenSize, attributeValue] = attribute.split(":");
-//       const [attributeName, attributeData] = attributeValue.split("[");
-//       const attributeValueWithoutBracket = attributeData.slice(0, -1);
-      
-//       if (screenSize === 'sm' && window.innerWidth < 576) {
-//         document.getElementById(elementId).style[attributeName] = attributeValueWithoutBracket;
-//       } else if (screenSize === 'md' && window.innerWidth >= 576 && window.innerWidth < 768) {
-//         document.getElementById(elementId).style[attributeName] = attributeValueWithoutBracket;
-//       } else if (screenSize === 'lg' && window.innerWidth >= 768 && window.innerWidth < 992) {
-//         document.getElementById(elementId).style[attributeName] = attributeValueWithoutBracket;
-//       } else if (screenSize === 'xl' && window.innerWidth >= 992) {
-//         document.getElementById(elementId).style[attributeName] = attributeValueWithoutBracket;
-//       }
-//     });
-//   }
-  
-//   // Apply initial dynamic attributes
-//   applyAttributes(dynamicAttributes);
-  
-//   // Add resize event listener to update dynamic attributes on screen width change
-//   window.addEventListener('resize', function() {
-//     applyAttributes(dynamicAttributes);
-//   });
-  
-//   // Set innerHTML of the element
-//   document.getElementById(elementId).innerHTML = innerHTML;
-// }
 
-// // Example usage
-// const dynamicAttributes = ['sm:margin[40px]', 'sm:font-size[40px]', 'sm:color[blue]', 'md:color[red]', 'md:margin[20px]', 'lg:margin[10px]', 'xl:margin[5px]'];
-// const elementId = 'target';
-// const innerHTML = '<h1>Hello, world!</h1>';
-// applyDynamicAttributes(dynamicAttributes, elementId, innerHTML);
+function applyResponsiveStyles(cssText, elementId, innerHTML, newElementId) {
+  let currentMedia = 'xl'; // Default media breakpoint
+  let existingElement; // Reference to the existing HTML element
+  let newElement; // Reference to the new HTML element
 
+  /**
+   * Apply styles to the element
+   * @param {HTMLElement} element - The HTML element to apply styles to
+   * @param {string} styles - The CSS styles string to apply
+   */
+  function applyStyles(element, styles) {
+    element.setAttribute('style', styles);
+  }
 
-// applyDynamicAttributes(['sm:margin-top[80px]'], 'target2', 'helloWorld2');
+  /**
+   * Create the new element with the provided inner HTML
+   */
+  function createNewElement() {
+    newElement = document.createElement('div');
+    newElement.innerHTML = innerHTML;
+
+    if (newElementId) {
+      newElement.id = newElementId; // Set the ID of the new element
+    }
+
+    existingElement.appendChild(newElement);
+  }
+
+  /**
+   * Update the current media breakpoint based on the window width
+   */
+  function updateCurrentMedia() {
+    const windowWidth = window.innerWidth;
+
+    if (windowWidth < 576) {
+      currentMedia = 'sm';
+    } else if (windowWidth < 768) {
+      currentMedia = 'md';
+    } else if (windowWidth < 992) {
+      currentMedia = 'lg';
+    } else {
+      currentMedia = 'xl';
+    }
+
+    applyResponsiveStyles();
+  }
+
+  /**
+   * Apply the responsive styles and class names to the new element
+   */
+  function applyResponsiveStyles() {
+    let styles = ''; // CSS styles string
+    let classList = ''; // Class list string
+
+    const regex = /([a-z]+):(.*?)(?:\[(.*?)\]|;)/g;
+    const matches = cssText.matchAll(regex);
+
+    for (const match of matches) {
+      const [, media, property, value] = match;
+      if (media === currentMedia && property && value) {
+        styles += `${property}:${value};`;
+      }
+    }
+
+    const classRegex = new RegExp(`${currentMedia}:(?:\\[(.*?)\\]|;)`, 'g');
+    const classMatches = cssText.matchAll(classRegex);
+
+    for (const classMatch of classMatches) {
+      const [, className] = classMatch;
+      if (className) {
+        classList += `${className} `;
+      }
+    }
+
+    applyStyles(newElement, styles);
+
+    if (classList) {
+      newElement.className = classList.trim();
+    }
+  }
+
+  // Event listener for window resize
+  window.addEventListener('resize', updateCurrentMedia);
+
+  // Get the reference to the existing element
+  existingElement = document.getElementById(elementId);
+
+  // Create the new element once
+  createNewElement();
+
+  // Initial style and class application
+  applyResponsiveStyles();
+}
+
+// function applyResponsiveStyles(cssText, elementId, innerHTML, newElementId) {
+// cssText - text to apply to CSS style
+// elementID - ID of HTML element, to attach new Element
+// innerHTML - html to add build new Element
+// newElementId - ID to add to new HTML element - can be empty string

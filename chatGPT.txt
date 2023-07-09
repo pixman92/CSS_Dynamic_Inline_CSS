@@ -70,3 +70,9 @@ exmaple (start with):
 make it into:
 "<div style='margin-top:40px;'>helloWorld</div>"
 ====
+
+refactor - use lots of comments.
+
+when media breakpoint is followed by [ and ]
+make the text inside [ and ] as className to add to Class List
+then when window width resizes, strip the className and reapply the applicible ClassNames

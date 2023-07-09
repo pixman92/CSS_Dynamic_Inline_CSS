@@ -42,26 +42,41 @@ function applyResponsiveStyles(cssText, elementId, innerHTML, newElementId) {
       currentMedia = 'xl';
     }
 
-    extractStyles();
+    applyResponsiveStyles();
   }
 
   /**
-   * Extract and apply the CSS styles for the current media breakpoint
+   * Apply the responsive styles and class names to the new element
    */
-  function extractStyles() {
+  function applyResponsiveStyles() {
     let styles = ''; // CSS styles string
+    let classList = ''; // Class list string
 
-    const regex = new RegExp(`${currentMedia}:(.*?)(?:\\[(.*?)\\]|;)`, 'g');
-    const matches = cssText.match(regex);
+    const regex = /([a-z]+):(.*?)(?:\[(.*?)\]|;)/g;
+    const matches = cssText.matchAll(regex);
 
-    if (matches) {
-      matches.forEach(match => {
-        const [_, property, value] = match.match(`${currentMedia}:(.*?)(?:\\[(.*?)\\]|;)`);
+    for (const match of matches) {
+      const [, media, property, value] = match;
+      if (media === currentMedia && property && value) {
         styles += `${property}:${value};`;
-      });
+      }
+    }
+
+    const classRegex = new RegExp(`${currentMedia}:(?:\\[(.*?)\\]|;)`, 'g');
+    const classMatches = cssText.matchAll(classRegex);
+
+    for (const classMatch of classMatches) {
+      const [, className] = classMatch;
+      if (className) {
+        classList += `${className} `;
+      }
     }
 
     applyStyles(newElement, styles);
+
+    if (classList) {
+      newElement.className = classList.trim();
+    }
   }
 
   // Event listener for window resize
@@ -73,12 +88,15 @@ function applyResponsiveStyles(cssText, elementId, innerHTML, newElementId) {
   // Create the new element once
   createNewElement();
 
-  // Initial style application
-  extractStyles();
+  // Initial style and class application
+  applyResponsiveStyles();
 }
 
-// function applyResponsiveStyles(cssText, elementId, innerHTML) {
+
+// function applyResponsiveStyles(cssText, elementId, innerHTML, newElementId) {
 //   let currentMedia = 'xl'; // Default media breakpoint
+//   let existingElement; // Reference to the existing HTML element
+//   let newElement; // Reference to the new HTML element
 
 //   /**
 //    * Apply styles to the element
@@ -87,6 +105,20 @@ function applyResponsiveStyles(cssText, elementId, innerHTML, newElementId) {
 //    */
 //   function applyStyles(element, styles) {
 //     element.setAttribute('style', styles);
+//   }
+
+//   /**
+//    * Create the new element with the provided inner HTML
+//    */
+//   function createNewElement() {
+//     newElement = document.createElement('div');
+//     newElement.innerHTML = innerHTML;
+
+//     if (newElementId) {
+//       newElement.id = newElementId; // Set the ID of the new element
+//     }
+
+//     existingElement.appendChild(newElement);
 //   }
 
 //   /**
@@ -105,15 +137,13 @@ function applyResponsiveStyles(cssText, elementId, innerHTML, newElementId) {
 //       currentMedia = 'xl';
 //     }
 
-//     const element = document.getElementById(elementId);
-//     extractStyles(element);
+//     extractStyles();
 //   }
 
 //   /**
 //    * Extract and apply the CSS styles for the current media breakpoint
-//    * @param {HTMLElement} element - The HTML element to apply styles to
 //    */
-//   function extractStyles(element) {
+//   function extractStyles() {
 //     let styles = ''; // CSS styles string
 
 //     const regex = new RegExp(`${currentMedia}:(.*?)(?:\\[(.*?)\\]|;)`, 'g');
@@ -126,16 +156,19 @@ function applyResponsiveStyles(cssText, elementId, innerHTML, newElementId) {
 //       });
 //     }
 
-//     const newElement = document.createElement('div');
-//     newElement.innerHTML = innerHTML;
 //     applyStyles(newElement, styles);
-//     element.innerHTML = newElement.outerHTML;
 //   }
 
 //   // Event listener for window resize
 //   window.addEventListener('resize', updateCurrentMedia);
 
+//   // Get the reference to the existing element
+//   existingElement = document.getElementById(elementId);
+
+//   // Create the new element once
+//   createNewElement();
+
 //   // Initial style application
-//   const element = document.getElementById(elementId);
-//   extractStyles(element);
+//   extractStyles();
 // }
+

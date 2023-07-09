@@ -23,3 +23,50 @@ sm:[center] - center is a predefined class
 
 
 take all the CSS text, that match the current media breakpoint, and reapply them everytime the window width resizes
+
+====================
+refactor - make it work with these 2 objectives in mind, 
+example: 
+sm:color[red] - this adds color:red; to the style attribute
+exmaple:
+sm:[centered] - this takes a predefinedClass and applies it to the class attribute of the targeted HTML element
+
+====================
+refactor - reapply both sm:color[red] and sm:[centered] on every resize of the width of the screensize
+
+refactor - everytime the screen width changes, reapply the CSS changes
+make sure sm:color[red] 
+
+====================
+
+javascript - use lots of comments.
+
+a function that takes in: CSS text, HTML element by ID, inner HTML and an ID string to be the new ID of the new (not parent) HTLM element
+
+the inner HTML is the new HTML element, attached to the HTML (by element ID), apply the CSS text to the new HTML element
+
+the CSS text starts with 'sm/md/lg/xl', then a ':' then text, then [ and ]
+example:
+myFunction( cssText, HTMLElementById, innerHTML)
+
+this function applies CSS text, as "style = CSS attribute:CSS value;" reapply the media breakpoint cssText everytime the window resizes. do not add cssText styling to the parentElement/HTML element given but to the child element
+
+add css Styling to newly created HTML element (to the child, not the parent element)
+attach the new HTML element to an already established HTML ID'd element. Add the ID string to the new element, so other elements can attach to it
+
+====
+the cssText example is:
+sm:margin-top[40px]
+
+HTML element by ID example:
+document.getElementById(element)
+
+innerHTML example:
+"<div>helloWorld</div>"
+
+(this is how the cssText is applied to the NEW HTML element and only the new HTML element created)
+exmaple (start with):
+ "<div>helloWorld</div>"
+make it into:
+"<div style='margin-top:40px;'>helloWorld</div>"
+====

@@ -232,6 +232,14 @@ function applyResponsiveStyles(cssText, elementId, innerHTML, newElementId) {
   // Initial style and class application
   applyResponsiveStyles();
 }
+// ====================
+// simple function to change CSS on the fly
+function changeCSS(selector, attribute, value) {
+  let selected = document.querySelector(selector);
+  selected.style[attribute] = value;
+}
+
+
 
 // function applyResponsiveStyles(cssText, elementId, innerHTML, newElementId) {
 // cssText - text to apply to CSS style

@@ -6,6 +6,11 @@ https://cdn.jsdelivr.net/gh/pixman92/CSS_Dynamic_Inline_CSS@0.9/CSS_Dynamic_Inli
 
 To make the CSS Dynamic Attributes, use the '$' in the Class String
 
+Sample for Dynamic Class
+```
+['sm:margin[40px]', 'sm:font-size[40px]', 'sm:color[blue]', 'md:color[red]', 'md:margin[20px]', 'lg:margin[10px]', 'xl:margin[5px]']
+```
+
 To make dynamic CSS Screen Width elements, use this function:
 ```
 applyResponsiveStyles(cssText, elementId, innerHTML, newElementId) {

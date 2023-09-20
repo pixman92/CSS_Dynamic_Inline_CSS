@@ -8,7 +8,7 @@ To make the CSS Dynamic Attributes, use the '$' in the Class String
 
 Sample for Dynamic Class
 ```
-['sm:margin[40px]', 'sm:font-size[40px]', 'sm:color[blue]', 'md:color[red]', 'md:margin[20px]', 'lg:margin[10px]', 'xl:margin[5px]']
+class = "$ sm:margin[40px] sm:font-size[40px] sm:color[blue] md:color[red] md:margin[20px] lg:margin[10px] xl:margin[5px]"
 ```
 
 To make dynamic CSS Screen Width elements, use this function:

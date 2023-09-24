@@ -1,7 +1,7 @@
+window.addEventListener("resize", ()=>{
+handleScreenWidthChange()
 window.onload = function () {
   // Attach the resize event listener
-  window.addEventListener("resize", ()=>{
-    handleScreenWidthChange()
 
     if(printIfTrue){
       console.log(determineBreakpoint(window.innerWidth));

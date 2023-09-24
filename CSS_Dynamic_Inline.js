@@ -1,5 +1,6 @@
 window.addEventListener("resize", ()=>{
 handleScreenWidthChange()
+});
 window.onload = function () {
   // Attach the resize event listener
 
@@ -7,7 +8,7 @@ window.onload = function () {
       console.log(determineBreakpoint(window.innerWidth));
       // debugger;
     }
-  });
+  }
 
   // Initial execution to apply the CSS for the current screen width
   handleScreenWidthChange();

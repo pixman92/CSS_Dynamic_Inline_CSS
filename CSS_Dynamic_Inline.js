@@ -1,40 +1,60 @@
-let breakpointStyles = {}; // Store styles for specific breakpoints
+// Your updated code here
+let currentMedia = "xl"; // Default media breakpoint
+let elementsWithMyDivClass; // Reference to elements with class "myDiv"
+let allStyles = {};
 
-function determineBreakpoint(screenWidth) {
-  if (screenWidth < 576) {
-    return "sm"; // Below 576px, set as 'sm'
-  } else if (screenWidth < 768) {
-    return "md"; // Below 768px, set as 'md'
-  } else if (screenWidth < 992) {
-    return "lg"; // Below 992px, set as 'lg'
-  } else {
-    return "xl"; // Default to 'xl' for larger screen sizes
-  }
+function applyStyles(element, styles) {
+  element.setAttribute("style", styles);
 }
 
-function applyStylesToDiv() {
-  const div = document.getElementById("myDiv");
-  const classNames = div.className.split(" ");
-  const screenWidth = window.innerWidth;
-  const breakpoint = determineBreakpoint(screenWidth);
+function updateCurrentMedia() {
+  const windowWidth = window.innerWidth;
 
-  classNames.forEach((className) => {
-    const [breakpointPart, propertyValue] = className.split(":");
-    const [property, value] = propertyValue.split("[");
-    if (breakpointPart === breakpoint) {
-      breakpointStyles[property] = value.slice(0, -1);
-    }
-    if (breakpointPart === "all") {
-      if (!breakpointStyles[property]) {
-        breakpointStyles[property] = value.slice(0, -1);
+  if (windowWidth < 576) {
+    currentMedia = "sm";
+  } else if (windowWidth < 768) {
+    currentMedia = "md";
+  } else if (windowWidth < 992) {
+    currentMedia = "lg";
+  } else {
+    currentMedia = "xl";
+  }
+
+  applyResponsiveStyles();
+}
+
+function applyResponsiveStyles() {
+  elementsWithMyDivClass.forEach((element) => {
+    let styles = "";
+    let classList = element.className;
+
+    const regex = new RegExp(`([a-z]+):(.*?)(?:\\[(.*?)\\]|;)`, "g");
+    const matches = classList.matchAll(regex);
+
+    for (const match of matches) {
+      const [, media, property, value] = match;
+      if (property && value) {
+        if (media === currentMedia || media === "all") {
+          if (media === "all") {
+            allStyles[property] = value;
+          } else {
+            allStyles[property] = "";
+            styles += `${property}:${value};`;
+          }
+        }
       }
     }
-  });
 
-  for (const property in breakpointStyles) {
-    div.style[property] = breakpointStyles[property];
-  }
+    for (const property in allStyles) {
+      styles += `${property}:${allStyles[property]};`;
+    }
+
+    applyStyles(element, styles);
+  });
 }
 
-window.addEventListener("resize", applyStylesToDiv);
-applyStylesToDiv();
+window.addEventListener("resize", updateCurrentMedia);
+
+elementsWithMyDivClass = document.querySelectorAll(".myDiv");
+
+applyResponsiveStyles();

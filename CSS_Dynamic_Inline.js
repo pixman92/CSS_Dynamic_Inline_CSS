@@ -131,10 +131,11 @@ function justAll() {
     for (let i = 1; pulled[i] != undefined; i++) {
       if (pulled[1][0] == 'all') {
         console.log('all', pulled[1][0]);
-        // debugger;
+        debugger;
         console.log(pulled[i]);
         savedStylers = createStyler(pulled[0]);
-        applyStyles('all',   pulled[0], pulled[i][1], pulled[i][2]);
+        applyStyles('all', pulled[0], pulled[i][1], pulled[i][2]);
+        debugger;
         // applyStyles(pulled[])
         // makeCSSApply(pulled[i], pulled[0]);
       }
@@ -194,7 +195,7 @@ function applyStyles(breakpoint, id, cssText, value) {
     // element.style[property] = value;
     // debugger;
     stylers[id].addStyle(`${cssText}: ${value}`);
-  } else if (currentBreakpoint == 'all' && breakpoint == 'all') {
+  } else if ( breakpoint == 'all') {
     // Apply the specified style for 'xl' breakpoint
     // element.style[property] = value;
     // debugger;

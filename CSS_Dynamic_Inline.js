@@ -38,14 +38,9 @@ function pullApart(myClassString) {
   const match = myClassString.match(regex);
   const digits = match[1];
   // debugger;
-  // console.log('substring', substring);
-  // debugger;
 
-  // const mediaQuery = "sm:width[100px], md:height[200px], lg:color[red]";
   let parsedMediaQueryArray = parseMediaQuery(myClassString);
-  // console.log(parsedMediaQuery);
   // Output: [["sm", "width", "100px"], ["md", "height", "200px"], ["lg", "color", "red"]]
-
 
   // debugger;
   parsedMediaQueryArray.unshift(digits);
@@ -139,7 +134,7 @@ function justAll() {
         // debugger;
         console.log(pulled[i]);
         savedStylers = createStyler(pulled[0]);
-        applyStyles(pulled[i][0], pulled[0], pulled[i][1], pulled[i][2]);
+        applyStyles('all',   pulled[0], pulled[i][1], pulled[i][2]);
         // applyStyles(pulled[])
         // makeCSSApply(pulled[i], pulled[0]);
       }
